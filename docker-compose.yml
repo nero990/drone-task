@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  drone-application:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      JDBC_DATASOURCE_URL: jdbc:mysql://mysqldb/drone_task
+      JDBC_DATASOURCE_USERNAME: root
+      JDBC_DATASOURCE_PASSWORD: root
+    depends_on:
+      - mysqldb
+    networks:
+      - drone-net
+
+  mysqldb:
+    platform: linux/x86_64
+    image: mysql:8.0.31
+    restart: always
+    ports:
+      - "3307:3306"
+    volumes:
+      - ~/db/drone-task:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: drone_task
+    networks:
+      - drone-net
+
+networks:
+  drone-net:

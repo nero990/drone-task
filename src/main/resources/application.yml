@@ -1,0 +1,21 @@
+server:
+  port: ${PORT:8080}
+spring:
+  profiles:
+    active: ${PROFILE:development}
+  datasource:
+    url: ${JDBC_DATASOURCE_URL:jdbc:mysql://localhost/drone_task}
+    username: ${JDBC_DATASOURCE_USERNAME:root}
+    password: ${JDBC_DATASOURCE_PASSWORD:password}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false #fixes the warning message... spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+    show-sql: ${SHOW_SQL:false}
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true # set Pageable begin index to 1
+
+drone:
+  low-battery-threshold: ${LOW_BATTERY_THRESHOLD:25}
